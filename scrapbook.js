@@ -1,9 +1,13 @@
 function parseScrapbook(base64)
 {
+    console.log('parse scrapbook');
     let result = {};
 
+    base64 = base64.split('&')[0];
     base64 = base64.replace(/-/g, "+").replace(/_/g, "/");
-    let bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0))
+    console.log(base64);
+    let bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+    console.log(bytes);
 
     let itemIndex = 1;
     for (let i = 0; i < bytes.length; i++)
