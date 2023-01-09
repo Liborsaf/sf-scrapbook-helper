@@ -3,7 +3,7 @@ function listener(details)
     if (!details.url.includes("sfgame") || !details.url.includes("req.php") || details.type != "xmlhttprequest")
         return {};
 
-    let filter = browser.webRequest.filterResponseData(details.requestId);
+    let filter = chrome.webRequest.RequestFilter(details.requestId);
     let decoder = new TextDecoder("utf-8");
     let encoder = new TextEncoder();
 
@@ -33,11 +33,20 @@ function listener(details)
     };
 }
 
-browser.webRequest.onBeforeRequest.addListener(
-    listener,
-    { urls: ["<all_urls>"] },
-    ["blocking"]
+chrome.webRequest.onCompleted.addListener(
+    (details) => {
+        
+    if (!details.url.includes("sfgame") || !details.url.includes("req.php") || details.type != "xmlhttprequest") return {};
+        console.log(details);
+
+    },
+    { urls: ["<all_urls>"] }
 );
+// chrome.webRequest.onBeforeRequest.addListener(
+//     listener,
+//     { urls: ["<all_urls>"] },
+//     ["blocking"]
+// );
 
 var scrapbooksByTabId = {};
 
@@ -69,10 +78,10 @@ async function onRequest(text, tabId)
             });
         }
 
-        await browser.tabs.executeScript(tabId, { code: `setCounter(\"${unownedCount}\");` });
+        await chrome.tabs.executeScript(tabId, { code: `setCounter(\"${unownedCount}\");` });
 
         let playerName = nameMatch[0].replace("otherplayername.r:", "");
-        await browser.tabs.executeScript(tabId, { code: `setPlayerName(\"${playerName}\");` });
+        await chrome.tabs.executeScript(tabId, { code: `setPlayerName(\"${playerName}\");` });
     }
 
     let scrapbookRegex = /scrapbook.r:([^$]+)/g;
