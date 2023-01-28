@@ -1,5 +1,5 @@
 # Albumkrtek
-A Firefox scrapbook helper extension for Shakes & Fidget. Useful if you don't have the holy grail yet.
+A Chrome scrapbook helper extension for Shakes & Fidget. Useful if you don't have the holy grail yet.
 
 It works purely by scanning http requests, making it virtually undetectable.
 
