@@ -5,8 +5,10 @@
     "description": "SFGame scrapbook helper",
     "permissions": [
         "webRequest",
-        "webRequestBlocking",
-        "tabs",
+        "declarativeNetRequest",
+        "tabs"
+    ],
+    "host_permissions": [
         "<all_urls>"
     ],
     "content_scripts": [
@@ -40,7 +42,8 @@
                 "*://*.sfgame.tr/",
                 "*://*.sfgame.us/"
             ],
-            "js": [ "pageload.js" ]
+            "js": [ "pageload.js" ],
+            "run_at": "document_start"
         }
     ],
     "web_accessible_resources": [{
@@ -50,13 +53,5 @@
             "scrapbook.js"
         ],
         "matches": [ "<all_urls>" ]
-     }],
-    "background": {
-        "scripts": [
-            "background.js",
-            "playeritems.js",
-            "scrapbook.js"
-        ],
-        "persistent": true
-    }
+     }]
 }

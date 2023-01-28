@@ -1,5 +1,29 @@
-function parseScrapbook(base64)
-{
+const CharacterClass = {
+    Warrior: 1,
+    Mage: 2,
+    Hunter: 3,
+    Assassin: 4,
+    Battlemage: 5,
+    Berserk: 6,
+    None: 0
+}
+
+const ItemType = {
+    None: 0,
+    Weapon: 1,
+    Shield: 2,
+    Chest: 4,
+    Shoes: 5,
+    Gloves: 6,
+    Helmet: 7,
+    Belt: 8,
+    Amulet: 9,
+    Ring: 10,
+    Talisman: 11,
+    Monster: 12
+}
+
+const parseScrapbook = (base64) => {
     console.log('parse scrapbook');
     let result = {};
 
@@ -370,31 +394,4 @@ function Method_5(int_0, int_1, int_2, int_3, int_4, int_5, characterClass_0)
         throw "kekster";
     }
     return `itm${int_5}_${num + int_3 - 1}_1`;
-}
-
-const CharacterClass =
-{
-    Warrior: 1,
-    Mage: 2,
-    Hunter: 3,
-    Assassin: 4,
-    Battlemage: 5,
-    Berserk: 6,
-    None: 0
-}
-
-const ItemType =
-{
-    None: 0,
-    Weapon: 1,
-    Shield: 2,
-    Chest: 4,
-    Shoes: 5,
-    Gloves: 6,
-    Helmet: 7,
-    Belt: 8,
-    Amulet: 9,
-    Ring: 10,
-    Talisman: 11,
-    Monster: 12
 }
