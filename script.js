@@ -10,7 +10,7 @@ const combatRegex = /combatloglist.s/g;
 
 const interceptor = "(" +
     function() {
-        console.log("Interceptor injected!");
+        // console.log("Interceptor injected!");
 
         const processResponse = async (response) => {
             if (response.url.includes("req.php") && response.url.includes("sfgame")) {
@@ -19,8 +19,6 @@ const interceptor = "(" +
                 dataElement.innerText = await response.text();
                 dataElement.style.height = "0";
                 dataElement.style.overflow = 'hidden';
-
-                // console.log(dataElement);
 
                 document.body.appendChild(dataElement);
             }
@@ -41,28 +39,9 @@ const interceptor = "(" +
 
                 return response;
             };
-
-            /* let XHR = window.XMLHttpRequest.prototype;
-            let send = XHR.send;
-            let open = XHR.open;
-
-            XHR.open = function(method, url) {
-                this.url = url; // the request url
-
-                return open.apply(this, arguments);
-            }
-
-            XHR.send = function() {
-                if (this.url.includes('req.php') && this.url.includes('sfgame')) {
-                    processResponse(...)
-                }
-
-                return send.apply(this, arguments);
-            }; */
         }
 
         overrideFetch();
-        // overrideXHR();
 } + ")();";
 
 const injectInterceptor = () => {
@@ -225,5 +204,4 @@ const processData = async (data) => {
     }
 }
 
-// requestIdleCallback(scrapeData);
 requestIdleCallback(checkForDOM);

@@ -1,3 +1,5 @@
+// TODO: Refactor this class
+
 const CharacterClass = {
     Warrior: 1,
     Mage: 2,

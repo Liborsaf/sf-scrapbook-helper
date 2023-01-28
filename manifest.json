@@ -1,16 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Scrapbook Helper",
-    "version": "1.0",
-    "description": "SFGame scrapbook helper",
-    "permissions": [
-        "webRequest",
-        "declarativeNetRequest",
-        "tabs"
-    ],
-    "host_permissions": [
-        "<all_urls>"
-    ],
+    "version": "1.1",
+    "description": "SFGame Scrapbook Helper",
     "content_scripts": [
         {
             "matches": [
@@ -42,8 +34,7 @@
                 "*://*.sfgame.tr/",
                 "*://*.sfgame.us/"
             ],
-            "js": [ "pageload.js" ],
-            "run_at": "document_start"
+            "js": [ "pageload.js" ]
         }
     ],
     "web_accessible_resources": [{
@@ -53,5 +44,5 @@
             "scrapbook.js"
         ],
         "matches": [ "<all_urls>" ]
-     }]
+    }]
 }
