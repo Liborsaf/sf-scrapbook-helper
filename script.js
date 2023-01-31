@@ -70,6 +70,8 @@ const init = () => {
 let scrapbook = {};
 let maxUnowned = { count: -Infinity, playerName: null, playerRank: 0 };
 
+let currentMax = null;
+
 const createPanel = () => {
     let panel = document.getElementById("panelId");
 
@@ -81,7 +83,7 @@ const createPanel = () => {
 
     panel.id = panelId;
     panel.style.zIndex = "1000";
-    panel.style.fontSize = "50px";
+    panel.style.fontSize = "15px";
     panel.style.width = "auto";
     panel.style.backgroundColor = "#FFFFFF33";
     panel.style.position = "fixed";
@@ -91,28 +93,58 @@ const createPanel = () => {
     panel.style.display = "flex";
     panel.style.flexDirection = "column";
     panel.style.alignItems = "center";
+    panel.style.gap = "10px";
 
     document.body.appendChild(panel);
 
     let counterView = document.createElement("div");
     counterView.classList.add(counterClass);
     counterView.style.color = "white";
+    counterView.style.fontSize = "50px";
     counterView.textContent = "0";
     panel.appendChild(counterView);
 
     let nameView = document.createElement("div");
     nameView.classList.add(nameClass);
     nameView.style.color = "white";
-    nameView.textContent = "";
-    nameView.style.fontSize = "15px";
+    nameView.textContent = "---";
     panel.appendChild(nameView);
 
     let maxView = document.createElement("div");
     maxView.classList.add(maxClass);
     maxView.style.color = "white";
-    maxView.textContent = "";
-    maxView.style.fontSize = "15px";
+    maxView.textContent = "---";
     panel.appendChild(maxView);
+
+    let buttonWrapper = document.createElement("div");
+    buttonWrapper.style.display = "flex";
+    buttonWrapper.style.gap = "10px";
+
+    let copyButton = document.createElement("button");
+    copyButton.textContent = "Copy";
+    copyButton.onclick = async () => {
+        if (!currentMax) {
+            return;
+        }
+
+        await navigator.clipboard.writeText(currentMax.playerName);
+        copyButton.textContent = "Copied!";
+
+        setTimeout(() => copyButton.textContent = "Copy", 1000);
+    };
+    buttonWrapper.appendChild(copyButton);
+
+    let resetButton = document.createElement("button");
+    resetButton.textContent = "Reset";
+    resetButton.onclick = async () => {
+        reset()
+        resetButton.textContent = "Done!";
+
+        setTimeout(() => resetButton.textContent = "Reset", 1000);
+    };
+    buttonWrapper.appendChild(resetButton);
+
+    panel.appendChild(buttonWrapper);
 }
 
 const scrapeData = () => {
@@ -132,8 +164,20 @@ const getView = (name) => {
     return document.getElementById(panelId).getElementsByClassName(name)[0];
 }
 
+const reset = () => {
+    currentMax = null
+
+    resetCounter()
+    resetPlayerName()
+    resetMax()
+}
+
 const setCounter = (count) => {
     getView(counterClass).textContent = count;
+}
+
+const resetCounter = () => {
+    getView(counterClass).textContent = "0";
 }
 
 const setPlayerName = (name) => {
@@ -141,15 +185,17 @@ const setPlayerName = (name) => {
 }
 
 const resetPlayerName = () => {
-    getView(nameClass).textContent = '';
+    getView(nameClass).textContent = "---";
 }
 
 const setMax = (max) => {
+    currentMax = max;
+
     getView(maxClass).textContent = `Max: ${max.playerRank} - ${max.playerName} ${max.count}`;
 }
 
 const resetMax = () => {
-    getView(maxClass).textContent = '';
+    getView(maxClass).textContent = "---";
 }
 
 const processData = async (data) => {
